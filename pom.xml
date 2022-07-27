@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>delta.coverage.mvp</groupId>
+  <artifactId>delta.coverage.mvp</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+    </dependency>
+  </dependencies>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <sonar.host.url>http://192.168.1.10:9000</sonar.host.url>
+    <sonar.jdbc.driverClassName>org.h2.Driver</sonar.jdbc.driverClassName>
+    <sonar.language>java</sonar.language>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.login>admin</sonar.login>
+    <sonar.password>adminpwd</sonar.password>
+    <sonar.projectKey>delta.coverage.mvp</sonar.projectKey>
+    <sonar.projectName>delta.coverage.mvp</sonar.projectName>
+    <sonar.projectVersion>test</sonar.projectVersion>
+    <sonar.sources>src/main/java</sonar.sources>
+    <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
+    <sonar.junit.reportsPath>${project.basedir}/target/surefire-reports</sonar.junit.reportsPath>
+    <sonar.surefire.reportsPath>${project.basedir}/target/surefire-reports</sonar.surefire.reportsPath>
+    <sonar.cobertura.reportPath>${project.basedir}/target/cobertura/cobertura.ser</sonar.cobertura.reportPath>
+  </properties>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.7</version>
+            <configuration>
+                <instrumentation>
+                    <includes>
+                        <include>**/*.class</include>
+                    </includes>
+                </instrumentation>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>clean</id>
+                    <phase>pre-site</phase>
+                    <goals>
+                        <goal>clean</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>instrument</id>
+                    <phase>site</phase>
+                    <goals>
+                        <goal>instrument</goal>
+                        <goal>cobertura</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <!-- SonarQube Plugin -->
+        <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.0.2</version>
+        </plugin>
+
+    </plugins>
+</build>
+
+<reporting>
+    <plugins>
+        <plugin>
+            <!-- use mvn cobertura:cobertura to generate cobertura reports -->
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.7</version>
+        </plugin>
+    </plugins>
+</reporting>
+</project>
